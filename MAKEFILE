@@ -1,0 +1,18 @@
+objects=connect.o
+output=main.out
+
+all: $(objects)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) -o $(BIN_DIR)$(output) $(addprefix $(BUILD_DIR),$(objects)) $(BUILD_DIR)main.o
+
+connect.o:
+    $(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) -o $(BUILD_DIR)connect_handle.o -c ./src/connect_handle.c
+
+main.o: $(objects)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) -o $(BUILD_DIR)main.o -c ./src/main.c
+
+debug: $(objects)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(LDLIBS) -o $(BIN_DIR)$(output) $(addprefix $(BUILD_DIR),$(objects)) $(BUILD_DIR)main.o $(DEBUG_FLAGS)
+
+clean:
+	rm -f $(BIN_DIR)*
+	rm -f $(BUILD_DIR)*
